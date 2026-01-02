@@ -1,26 +1,28 @@
 pipeline {
     agent any
+
     stages {
         stage('Checkout') {
             steps {
-                checkout scm [cite: 33]
+                checkout scm
             }
         }
         stage('Build & Test') {
             steps {
                 echo 'Running Python Application...'
-                sh 'python3 main.py' [cite: 33]
+                sh 'python3 main.py'
             }
         }
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'main.py', fingerprint: true [cite: 35]
+                archiveArtifacts artifacts: 'main.py', fingerprint: true
             }
         }
     }
+    
     post {
-        always {
-            echo 'Build finished. Sending notification...'
+        success {
+            echo 'Build successful! Sending notification...'
         }
     }
 }
